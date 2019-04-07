@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Udacity_6_News_App</string>
+    <string name="interests_edittext_hint">Add an interest here!</string>
+    <string name="add_button_text">Add item</string>
+    <string name="go_button_text">Lets Go!</string>
+    <string name="welcome_textview_text">Welcome!  First, let\'s get some interests.</string>
+</resources>
