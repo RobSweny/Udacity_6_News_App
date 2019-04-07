@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
                 if (interest.equals("")) {
                     Toast.makeText(MainActivity.this, "Your entered interest was empty! Let's try again.", Toast.LENGTH_SHORT).show();
                 } else {
-                    // The user added an interest, we can now let them proceed!
-                    go_button.setVisibility(View.VISIBLE);
 
                     // Proceed to next activity
                 }
