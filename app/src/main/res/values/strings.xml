@@ -3,5 +3,8 @@
     <string name="interests_edittext_hint">Add an interest here!</string>
     <string name="add_button_text">Add item</string>
     <string name="go_button_text">Lets Go!</string>
-    <string name="welcome_textview_text">Welcome!  First, let\'s get some interests.</string>
+    <string name="welcome_textview_text"><b><b><font fgcolor='#C46464'>Welcome!</font></b></b>\nFirst, let\'s get some\ninterests.</string>
+    <string name="add_item">Add Item</string>
+    <string name="autofillhints">Games, Donald Trump, Music</string>
+    <string name="interests_left">Interests left:</string>
 </resources>
