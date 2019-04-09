@@ -6,5 +6,5 @@
     <string name="welcome_textview_text"><b><b><font fgcolor='#C46464'>Welcome!</font></b></b>\nFirst, let\'s get some\ninterests.</string>
     <string name="add_item">Add Item</string>
     <string name="autofillhints">Games, Donald Trump, Music</string>
-    <string name="interests_left">Interests left:</string>
+    <string name="interests_left">Interests: %1$d</string>
 </resources>

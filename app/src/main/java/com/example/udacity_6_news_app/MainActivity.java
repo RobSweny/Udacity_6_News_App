@@ -2,6 +2,7 @@ package com.example.udacity_6_news_app;
 
 import android.app.Activity;
 import android.content.res.ColorStateList;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.design.chip.Chip;
 import android.support.v7.app.AppCompatActivity;
@@ -31,12 +32,13 @@ public class MainActivity extends AppCompatActivity {
     private FlexboxLayout chips_layout;
     private EditText interests_edittext;
     private Button go_button;
+    private TextView number_of_interests;
 
     // Variables
     private int interest_counter = 6;
     private String Interest;
     private ArrayList<String> Chips = new ArrayList<>();
-    final Chip[] chip = new Chip[12];
+    final Chip[] chip = new Chip[10];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
         TextView welcome_textview = findViewById(R.id.welcome_textview);
         interests_edittext = findViewById(R.id.interests_edittext);
         go_button = findViewById(R.id.go_button);
+        number_of_interests = findViewById(R.id.number_of_interests);
+
+        String converted_interest_counter = getResources().getString(R.string.interests_left, interest_counter);
+        number_of_interests.setText(converted_interest_counter);
 
         chips_layout = findViewById(R.id.chips_layout);
         chips_layout.setJustifyContent(JustifyContent.FLEX_START);
@@ -85,10 +91,9 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (chip[Index].getId() == v.getId()) {
-                        //Toast.makeText(MainActivity.this, "Current Item: + " + Chips.get(Index), Toast.LENGTH_SHORT).show();
                         if (chip[Index].getChipIcon() == null) {
                             chip[Index].setChipIcon(getResources().getDrawable(R.drawable.ic_close_12dp));
-                            interest_counter--;
+                            decreaseInterest();
 
                             if (interest_counter == 0) {
                                 go_button.setEnabled(false);
@@ -96,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
 
                         } else {
                             chip[Index].setChipIcon(null);
-                            interest_counter++;
+                            increaseInterest();
+
                             go_button.setEnabled(true);
                         }
                     }
@@ -121,16 +127,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Take the value from the EditText and give to the string "interest"
-                if (interest_counter > 11) {
+                if (interest_counter > 9) {
                     hideEverything(view);
                     Toast.makeText(MainActivity.this, "Whoa whoa!\n Too many interests", Toast.LENGTH_SHORT).show();
+                } else if (interests_edittext.getText().toString().trim().length() == 0) {
+
+                    Toast.makeText(MainActivity.this, "Start next activity", Toast.LENGTH_SHORT).show();
+
+
                 } else {
                     Interest = String.valueOf(interests_edittext.getText()).trim();
                     addChip(Interest);
-                    interest_counter++;
+                    increaseInterest();
+                    hideEverything(view);
                 }
-
-                hideEverything(view);
             } // End onClick
         }); // End go_button onClick
 
@@ -159,6 +169,9 @@ public class MainActivity extends AppCompatActivity {
                 if (s.toString().trim().length() == 0 && interest_counter == 0) {
                     go_button.setEnabled(false);
                     go_button.setText(R.string.go_button_text);
+                } else if (s.toString().trim().length() == 0) {
+                        go_button.setEnabled(true);
+                        go_button.setText(R.string.go_button_text);
                 } else {
                     go_button.setEnabled(true);
                     go_button.setText(R.string.add_button_text);
@@ -204,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
                     //Toast.makeText(MainActivity.this, "Current Item: + " + Chips.get(Index), Toast.LENGTH_SHORT).show();
                     if (chip[Index].getChipIcon() == null) {
                         chip[Index].setChipIcon(getResources().getDrawable(R.drawable.ic_close_12dp));
-                        interest_counter--;
+                        decreaseInterest();
 
                         if (interest_counter == 0) {
                             go_button.setEnabled(false);
@@ -212,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
 
                     } else {
                         chip[Index].setChipIcon(null);
-                        interest_counter++;
+                        increaseInterest();
                         go_button.setEnabled(true);
                     }
                 }
@@ -233,17 +246,31 @@ public class MainActivity extends AppCompatActivity {
         chips_layout.addView(chip[Index]);
     } // End add chip
 
+
+
     public void hideEverything(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        // Clear text for next
         interests_edittext.setText(null);
-        interests_edittext.startAnimation((Animation) getResources().getAnimation(R.anim.shake));
+        Animation anim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.shake);
+        interests_edittext.startAnimation(anim);
     }
 
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public void increaseInterest() {
+        interest_counter++;
+        String converted_interest_counter = getResources().getString(R.string.interests_left, interest_counter);
+        number_of_interests.setText(converted_interest_counter);
+    }
+
+    public void decreaseInterest() {
+        interest_counter--;
+        String converted_interest_counter = getResources().getString(R.string.interests_left, interest_counter);
+        number_of_interests.setText(converted_interest_counter);
     }
 
 } // End MainActivity
