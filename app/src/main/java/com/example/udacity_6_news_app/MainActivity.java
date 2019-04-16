@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             final int Index = i;
 
             // Initialize a new chip instance
-            chip[Index] = new Chip(this, null, R.style.Widget_MaterialComponents_Chip_Entry);
+            chip[Index] = new Chip(this, null, R.style.Widget_MaterialComponents_Chip_Filter);
             chip[Index].setId(i);
             chip[Index].setText(Chips.get(i));
             chip[Index].setHeight(20);
