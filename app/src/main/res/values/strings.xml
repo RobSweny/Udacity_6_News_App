@@ -7,4 +7,9 @@
     <string name="add_item">Add Item</string>
     <string name="autofillhints">Games, Donald Trump, Music</string>
     <string name="interests_left">Interests: %1$d</string>
+    <string name="your_news">Your\nNews</string>
+    <string name="your_news_textview">Add <b><b><font fgcolor='#7dc677'>YOUR</font></b></b> Topics Create <b><b><font fgcolor='#7dc677'>YOUR</font></b></b> News</string>
+    <string name="oops_nlooks_like_someone_tripped_over_a_wire_no_internet_available_nclick_below_to_go_to_internet_settings">Oops! Looks like someone tripped over a wire, no internet available. Click below to go to internet settings</string>
+    <string name="back_to_interests">Back to interests</string>
+    <string name="go_to_internet_settings">Go to internet settings</string>
 </resources>

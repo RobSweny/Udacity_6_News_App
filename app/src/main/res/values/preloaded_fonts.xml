@@ -2,8 +2,12 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/damion</item>
+        <item>@font/mitr_semibold</item>
+        <item>@font/pacifico</item>
         <item>@font/roboto_slab</item>
+        <item>@font/roboto_slab_bold</item>
         <item>@font/roboto_slab_thin</item>
+        <item>@font/secular_one</item>
         <item>@font/sue_ellen_francisco</item>
     </array>
 </resources>

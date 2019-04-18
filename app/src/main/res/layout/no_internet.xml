@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/no_internet" />
+
+    <TextView
+        android:id="@+id/oops_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/internet_button"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:text="@string/oops_nlooks_like_someone_tripped_over_a_wire_no_internet_available_nclick_below_to_go_to_internet_settings"
+        android:textColor="@color/dark_grey"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/internet_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/interests_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/rounded_rectangle"
+        android:text="@string/go_to_internet_settings" />
+
+    <Button
+        android:id="@+id/interests_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/rounded_rectangle"
+        android:text="@string/back_to_interests" />
+
+</RelativeLayout>
