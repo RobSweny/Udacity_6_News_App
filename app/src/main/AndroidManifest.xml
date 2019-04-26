@@ -24,6 +24,11 @@
         <activity android:name=".MainActivity" android:label="Adding Interests"></activity>
         <activity android:name=".NewsMenu" android:label="News"></activity>
         <activity android:name=".NoInternet" android:label="Internet Issues"></activity>
+        <activity android:name=".Settings" android:label="Settings" android:screenOrientation="portrait">
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.udacity_6_news_app.NewsMenu"/>
+        </activity>
         <meta-data
 
             android:name="preloaded_fonts"

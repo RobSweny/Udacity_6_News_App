@@ -39,8 +39,9 @@ public class SplashScreen extends AppCompatActivity {
                 }
             }, 3000);
         } else {
-            Intent i = new Intent(SplashScreen.this, MainActivity.class);
-            startActivity(i);
+            Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+            intent.putExtra("flag", "Splashscreen");
+            startActivity(intent);
         }
 
         dontShowButton.setOnClickListener(new View.OnClickListener() {

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="settings">
+
+    <Preference
+        android:title="Update Interests"
+        android:key="Interests"/>
+
+    <EditTextPreference
+        android:defaultValue="40"
+        android:inputType="number"
+        android:key="max articles"
+        android:selectAllOnFocus="true"
+        android:title="Max. number of Articles:" />
+
+    <ListPreference
+        android:defaultValue="relevance"
+        android:entries="@array/settings_order_by_labels"
+        android:entryValues="@array/settings_order_by_values"
+        android:key="order_by"
+        android:title="Order By" />
+
+
+</PreferenceScreen>

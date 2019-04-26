@@ -6,7 +6,11 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.chip.Chip;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,8 +26,12 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.flexbox.JustifyContent;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
+
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private String Interest;
     private ArrayList<String> Chips = new ArrayList<>();
     final Chip[] chip = new Chip[11];
-
     private boolean skipInterests;
 
     @Override
@@ -51,8 +58,12 @@ public class MainActivity extends AppCompatActivity {
         settings = getSharedPreferences("prefs", 0);
         skipInterests = settings.getBoolean("skipInterests", false);
 
+        // Checking if the user came from the splash screen.
+        Intent intent = getIntent();
+        String checkFlag = intent.getStringExtra("flag");
+
         // Check if user has already input their Interests
-        if (!skipInterests) {
+        if (!skipInterests || checkFlag.equals("Settings")) {
             // Initialize Views
             init();
 
@@ -237,7 +248,15 @@ public class MainActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = gson.toJson(list);
         editor.putString(key, json);
-        editor.apply();     // This line is IMPORTANT !!!
+        editor.apply();
+    }
+
+    public ArrayList<String> getArrayList(String key){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        Gson gson = new Gson();
+        String json = prefs.getString(key, null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        return gson.fromJson(json, type);
     }
 
     public void hideEverything(View view) {

@@ -25,21 +25,14 @@ public class NoInternet extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.no_internet);
 
-        interests_button = findViewById(R.id.interests_button);
         internet_button = findViewById(R.id.internet_button);
+        interests_button = findViewById(R.id.interests_button);
 
         interests_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // We need to edit the preferences to allow the user to go back to interests
-                settings = getSharedPreferences("prefs", 0);
-                SharedPreferences.Editor editor = settings.edit();
-                skipInterests = settings.getBoolean("skipInterests", false);
-                editor.putBoolean("skipInterests", false);
-                editor.apply();
-
                 // Bring user back
-                Intent i = new Intent(NoInternet.this, MainActivity.class);
+                Intent i = new Intent(NoInternet.this, NewsMenu.class);
                 startActivity(i);
             }
         });
@@ -57,7 +50,7 @@ public class NoInternet extends AppCompatActivity {
         super.onResume();
 
         if (isInternetWorking()) {
-            Toast.makeText(NoInternet.this,"Successfully connected to internet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NoInternet.this, "Successfully connected to internet", Toast.LENGTH_SHORT).show();
 
             // Bring user back
             Intent i = new Intent(NoInternet.this, NewsMenu.class);
@@ -66,12 +59,8 @@ public class NoInternet extends AppCompatActivity {
     }
 
     public boolean isInternetWorking() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        }
-        return false;
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

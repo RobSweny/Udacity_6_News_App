@@ -1,29 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/custom_item"
+    android:layout_width="match_parent"
+    android:layout_height="125dp"
+    android:layout_margin="@dimen/cardview_margin"
+    android:layout_marginStart="@dimen/cardview_left_right"
+    android:layout_marginLeft="@dimen/cardview_left_right"
+    android:layout_marginEnd="@dimen/cardview_left_right"
+    android:layout_marginRight="@dimen/cardview_left_right"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="@dimen/elevation">
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:textSize="20sp"
-        android:textColor="#1551c3"
-        android:textStyle="bold"/>
+    <RelativeLayout
+        android:id="@+id/relative_card_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#5d5d5d"
-        android:paddingBottom="5dp" />
-    <TextView
-        android:id="@+id/candy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#5d5d5d"
-        android:paddingBottom="5dp" />
-</LinearLayout>
+        <ImageView
+            android:id="@+id/article_image"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:paddingStart="10dp"
+            android:layout_margin="10dp"
+            android:elevation="5dp" />
+
+        <TextView
+            android:id="@+id/article_title_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/cardview_left_right"
+            android:layout_marginLeft="@dimen/cardview_left_right"
+            android:layout_marginTop="@dimen/textview_top_margin"
+            android:layout_marginEnd="@dimen/cardview_left_right"
+            android:layout_marginRight="@dimen/cardview_left_right"
+            android:layout_toEndOf="@id/article_image"
+            android:textColor="@color/dark_grey"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            tools:text="title_placeholder" />
+
+        <TextView
+            android:id="@+id/article_category_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_above="@+id/article_date_textview"
+            android:layout_marginStart="@dimen/cardview_left_right"
+            android:layout_marginLeft="@dimen/cardview_left_right"
+            android:layout_marginTop="@dimen/textview_top_margin"
+            android:layout_marginEnd="@dimen/cardview_left_right"
+
+            android:layout_marginRight="@dimen/cardview_left_right"
+            android:layout_toEndOf="@id/article_image"
+            android:textColor="@color/dark_grey"
+            android:textSize="12sp"
+            tools:text="section_placeholder" />
+
+        <TextView
+            android:id="@+id/article_author_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:paddingBottom="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/dark_grey"
+            android:gravity="right"
+            android:textSize="12sp"
+            tools:text="author_placeholder" />
+
+        <TextView
+            android:id="@+id/article_date_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+
+            android:layout_toEndOf="@id/article_image"
+            android:layout_marginStart="@dimen/cardview_left_right"
+            android:layout_marginEnd="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/dark_grey"
+            android:textSize="12sp"
+            tools:text="date" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

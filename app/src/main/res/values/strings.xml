@@ -12,4 +12,5 @@
     <string name="oops_nlooks_like_someone_tripped_over_a_wire_no_internet_available_nclick_below_to_go_to_internet_settings">Oops! Looks like someone tripped over a wire, no internet available. Click below to go to internet settings</string>
     <string name="back_to_interests">Back to interests</string>
     <string name="go_to_internet_settings">Go to internet settings</string>
+    <string name="back_to_the_news">Back to the news</string>
 </resources>
