@@ -11,11 +11,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.chip.Chip;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -36,14 +35,14 @@ public class NewsMenu extends AppCompatActivity implements LoaderManager.LoaderC
     private NewsAdapter newsAdapter;
     private ImageView article_image;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_menu);
 
         // Retrieve interests ArrayList
-        getArrayList("Chips");
+        Chips.add(String.valueOf(getArrayList("Chips")));
+
         // Initializing
         list_view = findViewById(R.id.list_view);
         article_image = findViewById(R.id.article_image);
@@ -61,15 +60,6 @@ public class NewsMenu extends AppCompatActivity implements LoaderManager.LoaderC
             Intent i = new Intent(NewsMenu.this, NoInternet.class);
             startActivity(i);
         }
-
-        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long l){
-
-
-            }
-        });
-
     }
 
     public boolean isInternetWorking() {
@@ -91,15 +81,20 @@ public class NewsMenu extends AppCompatActivity implements LoaderManager.LoaderC
         return gson.fromJson(json, type);
     }
 
-
-
-
     @Override
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String no_articles = sharedPrefs.getString("max articles", "40");
+        String order_by = sharedPrefs.getString("order-by", "relevance");
+
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("queries", Chips.get(0));
         uriBuilder.appendQueryParameter("show-tags", "contributor");
-        uriBuilder.appendQueryParameter("page-size", "40");
+        uriBuilder.appendQueryParameter("order-by", order_by);
+        uriBuilder.appendQueryParameter("show-fields", "thumbnail");
+        uriBuilder.appendQueryParameter("page-size", no_articles);
         uriBuilder.appendQueryParameter("api-key", GUARDIAN_API_KEY);
 
         return new NewsLoader(this, uriBuilder.toString());

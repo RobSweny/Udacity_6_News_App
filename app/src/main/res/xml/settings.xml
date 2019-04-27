@@ -18,7 +18,7 @@
         android:defaultValue="relevance"
         android:entries="@array/settings_order_by_labels"
         android:entryValues="@array/settings_order_by_values"
-        android:key="order_by"
+        android:key="order-by"
         android:title="Order By" />
 
 

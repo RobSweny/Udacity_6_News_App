@@ -6,11 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.chip.Chip;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.flexbox.JustifyContent;
@@ -30,7 +27,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -44,9 +40,13 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences settings;
 
     // Variables
-    private int interest_counter = 6;
+    private int interest_counter = 1;
     private String Interest;
     private ArrayList<String> Chips = new ArrayList<>();
+
+    // Set the default as Splashscreen
+    private String checkFlag = "Splashscreen";
+
     final Chip[] chip = new Chip[11];
     private boolean skipInterests;
 
@@ -60,10 +60,21 @@ public class MainActivity extends AppCompatActivity {
 
         // Checking if the user came from the splash screen.
         Intent intent = getIntent();
-        String checkFlag = intent.getStringExtra("flag");
+        checkFlag = intent.getStringExtra("flag");
+
+        // If the user comes from the settings screen we have to set SkipInterests back to false
+        if(checkFlag.equals("Settings")){
+            Chips.add(String.valueOf(getArrayList("Chips")));
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean("skipInterests", false);
+            editor.apply();
+        } else {
+            // Add default items to Chips
+            Chips.add("Movies");
+        }
 
         // Check if user has already input their Interests
-        if (!skipInterests || checkFlag.equals("Settings")) {
+        if (!skipInterests) {
             // Initialize Views
             init();
 
@@ -80,14 +91,6 @@ public class MainActivity extends AppCompatActivity {
             FlexboxLayout.LayoutParams params = new FlexboxLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
             params.setMargins(10, 10, 10, 10);
 
-            // Add default items to Chips
-            Chips.add("LifeStyle");
-            Chips.add("Science");
-            Chips.add("Politics");
-            Chips.add("Culture");
-            Chips.add("Tech");
-            Chips.add("Movies");
-
             for (int i = 0; i < Chips.size(); i++) {
                 final int Index = i;
                 // Initialize a new chip instance
@@ -95,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
                 chip[Index].setId(i);
                 chip[Index].setText(Chips.get(i));
                 chip[Index].setHeight(20);
+
+
                 chip[Index].setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.dark_blue)));
                 chip[Index].setTextColor(getResources().getColor(R.color.white));
                 chip[Index].setLayoutParams(params);
@@ -126,13 +131,16 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     // Take the value from the EditText and give to the string "interest"
-                    if (interest_counter > 9) {
+                    if (interest_counter ==  1 && go_button.getText().equals("Add item") ) {
                         hideEverything(view);
-                        Toast.makeText(MainActivity.this, "Whoa whoa!\n Too many interests", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Whoa whoa!\n One interest at a time!", Toast.LENGTH_SHORT).show();
                     } else if (interests_edittext.getText().toString().trim().length() == 0) {
                         // Save preferences that the user has already completed their interests
                         SharedPreferences.Editor editor = settings.edit();
                         editor.putBoolean("skipInterests", true);
+
+                        // Skip splash screen in future
+                        editor.putBoolean("skipSplash", true);
                         editor.apply();
 
                         // Save ArrayList to Preferences
@@ -195,10 +203,6 @@ public class MainActivity extends AppCompatActivity {
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 }
             });
-        } else {
-            // Bring user to News Menu
-            Intent i = new Intent(MainActivity.this, NewsMenu.class);
-            startActivity(i);
         }
 
     } // End onCreate
@@ -242,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
         chips_layout.addView(chip[Index]);
     } // End add chip
 
-    public void saveArrayList(ArrayList<String> list, String key){
+    public void saveArrayList(ArrayList<String> list, String key) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         SharedPreferences.Editor editor = prefs.edit();
         Gson gson = new Gson();
@@ -251,11 +255,12 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    public ArrayList<String> getArrayList(String key){
+    public ArrayList<String> getArrayList(String key) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         Gson gson = new Gson();
         String json = prefs.getString(key, null);
-        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
         return gson.fromJson(json, type);
     }
 
@@ -284,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
         number_of_interests.setText(converted_interest_counter);
     }
 
-    public void init(){
+    public void init() {
         welcome_textview = findViewById(R.id.welcome_textview);
         interests_edittext = findViewById(R.id.interests_edittext);
         go_button = findViewById(R.id.go_button);

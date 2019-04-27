@@ -12,27 +12,24 @@ import android.support.v7.app.AppCompatActivity;
 
 public class Settings extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
-
     }
 
     public static class NewsPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
-
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings);
 
+
             Preference maxArticles = findPreference("max articles");
             bindPreferenceSummaryToValue(maxArticles);
 
-            Preference orderBy = findPreference("order_by");
+            Preference orderBy = findPreference("order-by");
             bindPreferenceSummaryToValue(orderBy);
 
             Preference button = findPreference("Interests");
