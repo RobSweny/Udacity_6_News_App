@@ -11,17 +11,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.design.chip.Chip;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,22 +25,16 @@ public class NewsMenu extends AppCompatActivity implements LoaderManager.LoaderC
     private static final int NEWS_LOADER_ID = 1;
     private static final String GUARDIAN_API_KEY = "2734327e-9afb-415e-ae26-e5d61bbda952";
     private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search";
-    private ListView list_view;
-    private ArrayList<String> Chips = new ArrayList<>();
     private NewsAdapter newsAdapter;
-    private ImageView article_image;
+    private String interest;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_menu);
 
-        // Retrieve interests ArrayList
-        Chips.add(String.valueOf(getArrayList("Chips")));
-
         // Initializing
-        list_view = findViewById(R.id.list_view);
-        article_image = findViewById(R.id.article_image);
+        ListView list_view = findViewById(R.id.list_view);
 
         newsAdapter = new NewsAdapter(this, new ArrayList<News>());
         list_view.setAdapter(newsAdapter);
@@ -54,7 +43,6 @@ public class NewsMenu extends AppCompatActivity implements LoaderManager.LoaderC
         if (isInternetWorking()) {
             LoaderManager loaderManager = getLoaderManager();
             loaderManager.initLoader(NEWS_LOADER_ID, null, this);
-
         } else {
             // No active internet, send user to NoInternet Activity
             Intent i = new Intent(NewsMenu.this, NoInternet.class);
@@ -66,20 +54,9 @@ public class NewsMenu extends AppCompatActivity implements LoaderManager.LoaderC
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        }
-        return false;
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-    public ArrayList<String> getArrayList(String key) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(NewsMenu.this);
-        Gson gson = new Gson();
-        String json = prefs.getString(key, null);
-        Type type = new TypeToken<ArrayList<String>>() {
-        }.getType();
-        return gson.fromJson(json, type);
-    }
 
     @Override
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
@@ -88,9 +65,11 @@ public class NewsMenu extends AppCompatActivity implements LoaderManager.LoaderC
         String no_articles = sharedPrefs.getString("max articles", "40");
         String order_by = sharedPrefs.getString("order-by", "relevance");
 
+        interest = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("Interest", "Movies");
+
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
-        uriBuilder.appendQueryParameter("queries", Chips.get(0));
+        uriBuilder.appendQueryParameter("q", interest);
         uriBuilder.appendQueryParameter("show-tags", "contributor");
         uriBuilder.appendQueryParameter("order-by", order_by);
         uriBuilder.appendQueryParameter("show-fields", "thumbnail");
@@ -109,6 +88,7 @@ public class NewsMenu extends AppCompatActivity implements LoaderManager.LoaderC
         }
     }
 
+    // Clear newsAdapter on reset
     @Override
     public void onLoaderReset(Loader<List<News>> loader) {
         newsAdapter.clear();
@@ -120,6 +100,7 @@ public class NewsMenu extends AppCompatActivity implements LoaderManager.LoaderC
         return true;
     }
 
+    // If the user selects settings, create intent to open settings
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -130,5 +111,16 @@ public class NewsMenu extends AppCompatActivity implements LoaderManager.LoaderC
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Check if internet is working
+        if (!isInternetWorking()) {
+            // No active internet, send user to NoInternet Activity
+            Intent i = new Intent(NewsMenu.this, NoInternet.class);
+            startActivity(i);
+        }
     }
 }

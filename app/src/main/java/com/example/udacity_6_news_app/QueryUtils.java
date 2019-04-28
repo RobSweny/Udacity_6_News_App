@@ -1,7 +1,5 @@
 package com.example.udacity_6_news_app;
 
-import android.content.Context;
-import android.net.Uri;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -22,10 +20,8 @@ import java.util.List;
 public class QueryUtils {
 
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
-    private URL parsed_webUrl;
 
-    private QueryUtils() {
-    }
+    private QueryUtils() { }
 
     // Methods
     public static List<News> fetchNewsData(String requestUrl) {
@@ -98,7 +94,7 @@ public class QueryUtils {
 
     private static List<News> extractFeatureFromJson(String jsonResponse) {
         if (jsonResponse == null || jsonResponse.length() == 0)
-        return null;
+            return null;
 
         ArrayList<News> newsList = new ArrayList<>();
 
@@ -126,9 +122,9 @@ public class QueryUtils {
                         }
                     }
 
-                    if(obj.has("fields")) {
+                    if (obj.has("fields")) {
                         JSONObject currentFieldsObject = obj.getJSONObject("fields");
-                        if(currentFieldsObject.has("thumbnail")) {
+                        if (currentFieldsObject.has("thumbnail")) {
                             thumbnail = currentFieldsObject.getString("thumbnail");
                         } else {
                             thumbnail = null;

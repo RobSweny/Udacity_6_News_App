@@ -14,9 +14,7 @@ import java.util.TimerTask;
 public class SplashScreen extends AppCompatActivity {
 
     // Declaring views
-    private Button dontShowButton;
     private SharedPreferences settings;
-    private boolean skipSplash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +22,10 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.splash_screen);
 
         // Initializing
-        dontShowButton = findViewById(R.id.dontShowButton);
+        Button dontShowButton = findViewById(R.id.dontShowButton);
 
         settings = getSharedPreferences("prefs", 0);
-        skipSplash = settings.getBoolean("skipSplash", false);
+        boolean skipSplash = settings.getBoolean("skipSplash", false);
 
         // Check if user has selected skip splash
         if (!skipSplash) {
@@ -44,6 +42,7 @@ public class SplashScreen extends AppCompatActivity {
             startActivity(intent);
         }
 
+        // If the user clicks this button, the splash screen won't be shown again
         dontShowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

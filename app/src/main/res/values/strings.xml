@@ -3,7 +3,7 @@
     <string name="interests_edittext_hint">Add an interest here!</string>
     <string name="add_button_text">Add item</string>
     <string name="go_button_text">Lets Go!</string>
-    <string name="welcome_textview_text"><b><b><font fgcolor='#C46464'>Welcome!</font></b></b>\nFirst, let\'s get some\ninterests.</string>
+    <string name="welcome_textview_text"><b><b><font fgcolor='#C46464'>Welcome!</font></b></b>\nFirst, let\'s get an\ninterest.</string>
     <string name="add_item">Add Item</string>
     <string name="autofillhints">Games, Donald Trump, Music</string>
     <string name="interests_left">Interests: %1$d</string>
@@ -13,4 +13,9 @@
     <string name="back_to_interests">Back to interests</string>
     <string name="go_to_internet_settings">Go to internet settings</string>
     <string name="back_to_the_news">Back to the news</string>
+    <string name="images_from_guardian_articles">Images from Guardian articles</string>
+    <string name="image_for_no_internet">Image for no internet</string>
+    <string name="splashscreen_dont_show_again">Don\'t show me this again</string>
+    <string name="news_icon">news_icon</string>
+    <string name="image_background_for_splash_screen">image_background_for_splash_screen</string>
 </resources>

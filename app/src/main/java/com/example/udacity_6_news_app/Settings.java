@@ -19,20 +19,19 @@ public class Settings extends AppCompatActivity {
     }
 
     public static class NewsPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
-
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings);
 
-
+            // Find Preferences
+            Preference button = findPreference("Interests");
             Preference maxArticles = findPreference("max articles");
-            bindPreferenceSummaryToValue(maxArticles);
-
             Preference orderBy = findPreference("order-by");
+
+            bindPreferenceSummaryToValue(maxArticles);
             bindPreferenceSummaryToValue(orderBy);
 
-            Preference button = findPreference("Interests");
 
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
